@@ -520,8 +520,11 @@ def draw_mosaic(image,
                 for n in range(interest_box[0][0], interest_box[1][0] - step):
                     for i in range(step):
                         for j in range(step):
-                            b, g, r = img[m, n]
-                            img[m + i, n + j] = (b, g, r)
+                            # 方式一：使用左上角的像素替代
+                            # b, g, r = img[m, n]
+                            # img[m + i, n + j] = (b, g, r)
+                            # 方式二：使用黑色像素替代
+                            img[m + i, n + j] = (0, 0, 0)
 
     return img
 
