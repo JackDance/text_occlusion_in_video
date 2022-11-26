@@ -505,8 +505,16 @@ def draw_mosaic(image,
             x1_split = (box[1][0] - box[0][0]) * x1_split_ratio  # 右上角的偏移量
             height = box[2][1] - box[1][1] # 通过右上角，右下角计算的高度
             weight = box[1][0] - box[0][0] # 通过右上角，左上角计算的宽度
-            allowance = 25 if height < 80 else 70
-            small_allow = 5
+
+            if height < 40:
+                allowance = 20
+            elif 40<= height < 80:
+                allowance = 30
+            elif 80<= height < 100:
+                allowance = 60
+            else:
+                allowance = 88
+            small_allow = 10
 
             upper_left = (int(box[1][0] - x0_split)-allowance, box[1][1]-int(0.5*allowance))
             upper_right = (int(box[1][0] - x1_split + small_allow), box[1][1])
