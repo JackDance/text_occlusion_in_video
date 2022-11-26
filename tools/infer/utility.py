@@ -516,10 +516,25 @@ def draw_mosaic(image,
                 allowance = 88
             small_allow = 10
 
-            upper_left = (int(box[1][0] - x0_split)-allowance, box[1][1]-int(0.5*allowance))
-            upper_right = (int(box[1][0] - x1_split + small_allow), box[1][1])
-            lower_right = (int(box[2][0] - x1_split + small_allow), box[2][1])
-            lower_left = (int(box[2][0] - x0_split)-allowance, box[2][1]+int(0.5*allowance))
+            # upper_left = (int(box[1][0] - x0_split)-allowance, int(box[1][1]-0.4*allowance))
+            # upper_right = (int(box[1][0] - x1_split + small_allow), int(box[1][1]-0.4*allowance))
+            # lower_right = (int(box[2][0] - x1_split + small_allow), int(box[2][1]+0.4*allowance))
+            # lower_left = (int(box[3][0] - x0_split)-allowance, int(box[3][1]+0.4*allowance))
+            # interest_box = [upper_left, upper_right, lower_right, lower_left]
+
+            x00 = int(box[1][0] - x0_split)-allowance if (int(box[1][0] - x0_split)-allowance) > 0 else 0
+            x01 = int(box[1][1]-0.4*allowance) if (int(box[1][1]-0.4*allowance)) >0 else 0
+            x10 = int(box[1][0] - x1_split + small_allow) if (int(box[1][0] - x1_split + small_allow)) < int(box[1][0]) else int(box[1][0])
+            x11 = int(box[1][1]-0.4*allowance) if int(box[1][1]-0.4*allowance) > 0 else int(box[1][1])
+            x20 = int(box[2][0] - x1_split + small_allow) if int(box[2][0] - x1_split + small_allow) < int(box[2][0]) else int(box[2][0])
+            x21 = int(box[2][0] - x1_split + small_allow) if int(box[2][0] - x1_split + small_allow) > 0 else 0
+            x30 = int(box[3][0] - x0_split)-allowance if (int(box[3][0] - x0_split)-allowance) < int(box[3][0]) else int(box[3][0])
+            x31 = int(box[3][1]+0.4*allowance) if int(box[3][1]+0.4*allowance) < int(box[3][1]) else int(box[3][1])
+
+            upper_left = (x00, x01)
+            upper_right = (x10, x11)
+            lower_right = (x20, x21)
+            lower_left = (x30, x31)
             interest_box = [upper_left, upper_right, lower_right, lower_left]
 
             # 马赛克
