@@ -13,7 +13,7 @@
 ## 执行命令
 执行图像文件夹的end to end推理
 ```commandline
-python3 tools/jack/predict_system.py \
+python3 tools/infer_aws/predict_system.py \
 --image_dir=/home/jackdance/Desktop/aws_video/some_frame \
 --det_model_dir="./pretrained_model/en_PP-OCRv3_det_infer/" \
 --rec_model_dir="./pretrained_model/en_PP-OCRv3_rec_infer/" \
@@ -22,7 +22,7 @@ python3 tools/jack/predict_system.py \
 
 执行视频的end to end推理：输入为单个视频，输出为处理过的单个视频（该视频没有音频）
 ```commandline
-python3 tools/jack/infer_end_to_end.py \
+python3 tools/infer_aws/infer_end_to_end.py \
 --video=/home/jackdance/Desktop/aws_video/aws_first_2mins.mp4 \
 --det_model_dir="./pretrained_model/en_PP-OCRv3_det_infer/" \
 --rec_model_dir="./pretrained_model/en_PP-OCRv3_rec_infer/" \
