@@ -8,7 +8,7 @@
 同时，为了提高速度，需要进行并行的操作。具体是先将单个时间长的视频（about 2h）等分成若干个时间较短的视频。然后同时对多个短视频进行处理。
 
 具体路线图如下：
-![](https://gitee.com/Jack_forever/aws-video-process/blob/master/doc/imgs/TechnologyRoadmap.jpeg)
+![](https://i.postimg.cc/V6bvck8R/Technology-Roadmap.jpg)
 
 ## 执行命令
 执行图像文件夹的end to end推理
