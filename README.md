@@ -10,8 +10,26 @@
 具体路线图如下：
 ![](https://i.postimg.cc/V6bvck8R/Technology-Roadmap.jpg)
 
-## 执行命令
-执行图像文件夹的end to end推理
+## 运行步骤
+### 1. 下载预训练的模型
+进入主目录，新建并进入pretrained_model文件夹，下面下载两个关于该任务的模型
+1.1 下载英文文字检测模型
+```commandline
+wget https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_det_infer.tar
+tar xf en_PP-OCRv3_det_infer.tar
+```
+1.2 下载英文文字识别模型
+```commandline
+wget https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_rec_infer.tar
+tar xf en_PP-OCRv3_rec_infer.tar
+```
+
+
+### 2. 运行命令
+2.1执行图像文件夹的end to end推理
+
+输入为待预测的图像文件夹，输出为多张预测后的图像
+
 ```commandline
 python3 tools/infer_aws/predict_system.py \
 --image_dir=/home/jackdance/Desktop/aws_video/some_frame \
@@ -20,7 +38,10 @@ python3 tools/infer_aws/predict_system.py \
 --rec_char_dict_path="ppocr/utils/en_dict.txt"
 ```
 
-执行视频的end to end推理：输入为单个视频，输出为处理过的单个视频（该视频没有音频）
+2.2 执行视频的end to end推理
+
+输入为单个视频，输出为处理过的单个视频（该视频没有音频）
+
 ```commandline
 python3 tools/infer_aws/infer_end_to_end.py \
 --video=/home/jackdance/Desktop/aws_video/aws_first_2mins.mp4 \
