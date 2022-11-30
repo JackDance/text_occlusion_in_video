@@ -14,22 +14,39 @@
 
 
 ## 运行步骤
-### 1. 下载预训练的模型
+### 1. 环境配置
+1.1 新建并激活conda环境
+```commandline
+conda create -n video_process python=3.8 -y
+conda activate video_process
+```
+1.2 安装依赖
+```commandline
+# 安装paddle框架，这里安装的是cpu版本的paddle，大家根据自己机器的环境选择安装合适版本，参考链接：[paddlepaddle安装](https://www.paddlepaddle.org.cn/)
+python -m pip install paddlepaddle==2.4.0 -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+```commandline
+git clone https://gitee.com/Jack_forever/aws-video-process
+cd aws-video-process
+pip install -r requirements.txt
+```
+
+### 2. 下载预训练的模型
 进入主目录，新建并进入pretrained_model文件夹，下面下载两个关于该任务的模型
-1.1 下载英文文字检测模型
+2.1 下载英文文字检测模型
 ```commandline
 wget https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_det_infer.tar
 tar xf en_PP-OCRv3_det_infer.tar
 ```
-1.2 下载英文文字识别模型
+2.2 下载英文文字识别模型
 ```commandline
 wget https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_rec_infer.tar
 tar xf en_PP-OCRv3_rec_infer.tar
 ```
 
 
-### 2. 运行命令
-2.1执行图像文件夹的end to end推理
+### 3. 运行命令
+3.1执行图像文件夹的end to end推理
 
 输入为待预测的图像文件夹，输出为多张预测后的图像
 
@@ -41,7 +58,7 @@ python3 tools/infer_aws/predict_system.py \
 --rec_char_dict_path="ppocr/utils/en_dict.txt"
 ```
 
-2.2 执行视频的end to end推理
+3.2 执行视频的end to end推理
 
 输入为单个视频，输出为处理过的单个视频（该视频没有音频）
 
