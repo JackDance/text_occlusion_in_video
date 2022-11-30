@@ -26,6 +26,7 @@ conda activate video_process
 ```commandline
 python -m pip install paddlepaddle==2.4.0 -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
+安装项目依赖
 ```commandline
 git clone https://gitee.com/Jack_forever/aws-video-process
 cd aws-video-process
