@@ -21,8 +21,9 @@ conda create -n video_process python=3.8 -y
 conda activate video_process
 ```
 1.2 安装依赖
+
+安装paddle框架，这里安装的是cpu版本的paddle，大家根据自己机器的环境选择安装合适版本，参考链接：[paddlepaddle安装](https://www.paddlepaddle.org.cn/)
 ```commandline
-# 安装paddle框架，这里安装的是cpu版本的paddle，大家根据自己机器的环境选择安装合适版本，参考链接：[paddlepaddle安装](https://www.paddlepaddle.org.cn/)
 python -m pip install paddlepaddle==2.4.0 -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 ```commandline
