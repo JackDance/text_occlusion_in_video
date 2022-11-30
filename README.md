@@ -8,7 +8,10 @@
 同时，为了提高速度，需要进行并行的操作。具体是先将单个时间长的视频（about 2h）等分成若干个时间较短的视频。然后同时对多个短视频进行处理。
 
 具体路线图如下：
-![](https://i.postimg.cc/V6bvck8R/Technology-Roadmap.jpg)
+<center>
+    <img src="https://i.postimg.cc/V6bvck8R/Technology-Roadmap.jpg" title="Route Map" width="350">
+</center>
+
 
 ## 运行步骤
 ### 1. 下载预训练的模型
@@ -49,3 +52,9 @@ python3 tools/infer_aws/infer_end_to_end.py \
 --rec_model_dir="./pretrained_model/en_PP-OCRv3_rec_infer/" \
 --rec_char_dict_path="ppocr/utils/en_dict.txt"
 ```
+
+## 结果示例
+<center class="half">
+    <img src="https://i.postimg.cc/xds6LqB5/origin-aws.png" title="origin" width="300"/>
+    <img src="https://i.postimg.cc/pXq5W8js/processed-aws.png" title="processed" width="300"/>
+</center>
