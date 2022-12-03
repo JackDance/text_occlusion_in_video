@@ -1,15 +1,14 @@
 ## 背景介绍
-对aws会议视频中出现的"aws"logo以及ppt中出现的"aws"单词进行遮盖，
+本项目以AWS关键字为例，介绍了如何对aws会议视频中出现的"aws"logo以及视频中出现的"aws"单词进行遮盖，
 具体可以使用mask遮盖或者模糊化处理。
 
 ## 技术路线
 该项目使用mask遮盖的方式进行处理。具体是使用PaddleOCR库对视频每一帧的图像进行
 文字识别，如果"识别的字符串".lower() == "aws", 则对该字符串对应的区域进行黑化处理(b, g, r)=(0, 0, 0)。
-同时，为了提高速度，需要进行并行的操作。具体是先将单个时间长的视频（about 2h）等分成若干个时间较短的视频。然后同时对多个短视频进行处理。
 
 具体路线图如下：
 <center>
-    <img src="https://i.postimg.cc/V6bvck8R/Technology-Roadmap.jpg" title="Route Map" width="350">
+    <img src="https://i.postimg.cc/DwDZ3R6t/aws.png" title="Route Map" width="350">
 </center>
 
 
