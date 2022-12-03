@@ -8,7 +8,7 @@
 
 具体路线图如下：
 <center>
-    <img src="https://i.postimg.cc/DwDZ3R6t/aws.png" title="Route Map" width="350">
+    <img src="https://i.postimg.cc/DwDZ3R6t/aws.png" title="Route Map" width="300">
 </center>
 
 
