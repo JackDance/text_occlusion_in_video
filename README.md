@@ -72,6 +72,7 @@ python3 tools/infer_aws/infer_end_to_end.py \
 ```
 
 ## 结果示例
+第一张图为原始视频中的带有aws字符的某帧图片，第二张图为对应的处理过的图片
 <center class="half">
     <img src="https://i.postimg.cc/xds6LqB5/origin-aws.png" title="origin" width="300"/>
     <img src="https://i.postimg.cc/pXq5W8js/processed-aws.png" title="processed" width="300"/>
