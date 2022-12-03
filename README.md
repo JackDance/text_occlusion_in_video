@@ -28,7 +28,7 @@ python -m pip install paddlepaddle==2.4.0 -i https://pypi.tuna.tsinghua.edu.cn/s
 安装项目依赖
 ```commandline
 git clone 该仓库地址
-cd aws-video-process
+cd 该仓库主目录
 pip install -r requirements.txt
 ```
 
