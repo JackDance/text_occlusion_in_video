@@ -77,3 +77,10 @@ python3 tools/infer_aws/infer_end_to_end.py \
     <img src="https://i.postimg.cc/xds6LqB5/origin-aws.png" title="origin" width="300"/>
     <img src="https://i.postimg.cc/pXq5W8js/processed-aws.png" title="processed" width="300"/>
 </center>
+
+
+## 后续计划
+- 增加文字替换功能
+- 增加logo遮盖功能
+- 支持指定关键字参数
+- Docker镜像
