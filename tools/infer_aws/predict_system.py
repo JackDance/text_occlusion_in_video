@@ -139,6 +139,7 @@ def main(args):
     is_visualize = True
     font_path = args.vis_font_path
     drop_score = args.drop_score
+    keyword = args.keyword
     draw_img_save_dir = args.draw_img_save_dir
     os.makedirs(draw_img_save_dir, exist_ok=True)
     save_results = []
@@ -204,6 +205,7 @@ def main(args):
                 boxes,
                 txts,
                 scores,
+                keyword,
                 drop_score=drop_score
                 )
             if flag:

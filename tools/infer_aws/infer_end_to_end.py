@@ -132,13 +132,12 @@ def main(args):
     text_sys = TextSystem(args)
     is_visualize = True
     font_path = args.vis_font_path
+    keyword = args.keyword
     drop_score = args.drop_score
     video = args.video
     video_save_dir = args.video_save_path
     video_name = os.path.basename(video).split(".")[0] + ".mp4"
-    # draw_img_save_dir = args.draw_img_save_dir
     os.makedirs(video_save_dir, exist_ok=True)
-    # os.makedirs(draw_img_save_dir, exist_ok=True)
     save_results = []
 
     logger.info(
@@ -212,6 +211,7 @@ def main(args):
             boxes,
             txts,
             scores,
+            keyword,
             drop_score=drop_score
         )
 

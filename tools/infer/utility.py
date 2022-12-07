@@ -122,6 +122,9 @@ def init_args():
     parser.add_argument("--use_pdserving", type=str2bool, default=False)
     parser.add_argument("--warmup", type=str2bool, default=False)
 
+    # keyword
+    parser.add_argument("--keyword", type=str, default="aws", help="keyword to be replaced or masked")
+
     # SR parmas
     parser.add_argument("--sr_model_dir", type=str)
     parser.add_argument("--sr_image_shape", type=str, default="3, 32, 128")
@@ -453,11 +456,17 @@ def draw_mosaic(image,
                 boxes,
                 txts,
                 scores,
+                keyword,
                 drop_score):
     """
     对已经经过opencv打开过的image进行指定区域的马赛克
-    : param image:
-    : param boxes:
+    :param image:
+    :param boxes:
+    :param txts:
+    :param scores:
+    :param keyword: 需要替换或遮盖的关键字
+    :param drop_score:
+    :return:
     """
     # weight, height, depth = image.shape
 
@@ -470,34 +479,8 @@ def draw_mosaic(image,
         len_txt = len(txt)
         lower_txt = txt.lower().strip()
 
-
-        # 方式一：以左侧为标记
-        # if "aws" in lower_txt:
-        #     idx_st = lower_txt.find("aws")  # "aws"开始的索引值
-        #     idx_ed = idx_st + 3  # "aws"结束的索引值
-        #     x0_split_ratio = idx_st / len_txt
-        #     x1_split_ratio = idx_ed / len_txt
-        #     x0_split = (box[1][0] - box[0][0]) * x0_split_ratio  # 左上角的偏移量
-        #     x1_split = (box[1][0] - box[0][0]) * x1_split_ratio  # 右上角的偏移量
-        #
-        #     upper_left = (int(box[0][0] + x0_split)-10, box[0][1]-10)
-        #     upper_right = (int(box[0][0] + x1_split)+10, box[1][1]-10)
-        #     lower_right = (int(box[3][0] + x1_split)+10, box[2][1]+10)
-        #     lower_left = (int(box[3][0] + x0_split)-10, box[3][1]+10)
-        #     interest_box = [upper_left, upper_right, lower_right, lower_left]
-        #
-        #     # 马赛克
-        #     step = 10
-        #     for m in range(interest_box[0][1], interest_box[3][1] - step):
-        #         for n in range(interest_box[0][0], interest_box[1][0] - step):
-        #             for i in range(step):
-        #                 for j in range(step):
-        #                     b, g, r = img[m, n]
-        #                     img[m + i, n + j] = (b, g, r)
-
-        # 方式二：以右侧为标记
-        if "aws" in lower_txt:
-            idx_st = lower_txt.find("aws")  # "aws"开始的索引值
+        if keyword in lower_txt:
+            idx_st = lower_txt.find(keyword)  # keyword开始的索引值
             idx_ed = idx_st + 3  # "aws"结束的索引值
             x0_split_ratio = (len_txt - idx_st) / len_txt
             x1_split_ratio = (len_txt - idx_ed) / len_txt
@@ -515,12 +498,6 @@ def draw_mosaic(image,
             else:
                 allowance = 88
             small_allow = 10
-
-            # upper_left = (int(box[1][0] - x0_split)-allowance, int(box[1][1]-0.4*allowance))
-            # upper_right = (int(box[1][0] - x1_split + small_allow), int(box[1][1]-0.4*allowance))
-            # lower_right = (int(box[2][0] - x1_split + small_allow), int(box[2][1]+0.4*allowance))
-            # lower_left = (int(box[3][0] - x0_split)-allowance, int(box[3][1]+0.4*allowance))
-            # interest_box = [upper_left, upper_right, lower_right, lower_left]
 
             x00 = int(box[1][0] - x0_split)-allowance if (int(box[1][0] - x0_split)-allowance) > 0 else 0
             x01 = int(box[1][1]-0.4*allowance) if (int(box[1][1]-0.4*allowance)) >0 else 0

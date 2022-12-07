@@ -82,5 +82,4 @@ python3 tools/infer_aws/infer_end_to_end.py \
 ## 后续计划
 - 增加文字替换功能
 - 增加logo遮盖功能
-- 支持指定关键字参数
 - Docker镜像
