@@ -54,7 +54,7 @@ tar xf en_PP-OCRv3_rec_infer.tar
 输入为待预测的图像文件夹，输出为多张预测后的图像
 
 ```commandline
-python3 tools/infer_aws/infer_end_to_end.py \
+python3 tools/infer_keyword/infer_end_to_end.py \
 --keyword="aws" \
 --image_dir=/home/jackdance/Desktop/aws_video/some_frame \
 --det_model_dir="./pretrained_model/en_PP-OCRv3_det_infer/" \
@@ -69,7 +69,7 @@ python3 tools/infer_aws/infer_end_to_end.py \
 PS: [输入视频样例](https://pan.baidu.com/s/16AxRp0IVYF7AJ67L2GoZBA) 提取码: f93p
 
 ```commandline
-python3 tools/infer_aws/infer_end_to_end.py \
+python3 tools/infer_keyword/infer_end_to_end.py \
 --keyword="aws" \
 --video=/home/jackdance/Desktop/aws_video/aws_first_2mins.mp4 \
 --det_model_dir="./pretrained_model/en_PP-OCRv3_det_infer/" \
