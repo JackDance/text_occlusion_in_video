@@ -77,7 +77,7 @@ python3 tools/infer_aws/infer_end_to_end.py \
 --rec_char_dict_path="ppocr/utils/en_dict.txt"
 ```
 参数解释：
-- keyword 需要替换或遮挡的关键字
+- keyword 需要替换或遮挡的关键字 (这里只能指定英文关键字，若指定中文，需下载中文文字检测和识别模型)
 - image_dir 输入的图像文件夹
 - video 输入的视频
 - det_model_dir 文字检测模型的路径
