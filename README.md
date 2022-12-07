@@ -34,6 +34,7 @@ pip install -r requirements.txt
 
 ### 2. 下载预训练的模型
 进入主目录，新建并进入pretrained_model文件夹，下面下载两个关于该任务的模型
+
 2.1 下载英文文字检测模型
 ```commandline
 wget https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_det_infer.tar
@@ -47,6 +48,7 @@ tar xf en_PP-OCRv3_rec_infer.tar
 
 
 ### 3. 运行命令
+
 3.1执行图像文件夹的end to end推理
 
 输入为待预测的图像文件夹，输出为多张预测后的图像
@@ -64,6 +66,8 @@ python3 tools/infer_aws/predict_system.py \
 
 输入为单个视频，输出为处理过的单个视频（该视频没有音频）
 
+PS: [输入视频样例](https://pan.baidu.com/s/16AxRp0IVYF7AJ67L2GoZBA) 提取码: f93p
+
 ```commandline
 python3 tools/infer_aws/infer_end_to_end.py \
 --keyword="aws" \
@@ -72,6 +76,13 @@ python3 tools/infer_aws/infer_end_to_end.py \
 --rec_model_dir="./pretrained_model/en_PP-OCRv3_rec_infer/" \
 --rec_char_dict_path="ppocr/utils/en_dict.txt"
 ```
+参数解释：
+- keyword 需要替换或遮挡的关键字
+- image_dir 输入的图像文件夹
+- video 输入的视频
+- det_model_dir 文字检测模型的路径
+- rec_model_dir 文字识别模型的路径
+- rec_char_dict_path 文字识别字符集的路径
 
 ## 结果示例
 第一张图为原始视频中的带有aws字符的某帧图片，第二张图为对应的处理过的图片
