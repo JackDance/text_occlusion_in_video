@@ -53,6 +53,7 @@ tar xf en_PP-OCRv3_rec_infer.tar
 
 ```commandline
 python3 tools/infer_aws/predict_system.py \
+--keyword="aws" \
 --image_dir=/home/jackdance/Desktop/aws_video/some_frame \
 --det_model_dir="./pretrained_model/en_PP-OCRv3_det_infer/" \
 --rec_model_dir="./pretrained_model/en_PP-OCRv3_rec_infer/" \
@@ -65,6 +66,7 @@ python3 tools/infer_aws/predict_system.py \
 
 ```commandline
 python3 tools/infer_aws/infer_end_to_end.py \
+--keyword="aws" \
 --video=/home/jackdance/Desktop/aws_video/aws_first_2mins.mp4 \
 --det_model_dir="./pretrained_model/en_PP-OCRv3_det_infer/" \
 --rec_model_dir="./pretrained_model/en_PP-OCRv3_rec_infer/" \
