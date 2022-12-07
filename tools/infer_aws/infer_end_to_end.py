@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time        : 2022/11/25 22:07
+# @Time        : 2022/12/7 21:48
 # @Author      : Luyao.zhang
-# @File        : infer_end_to_end.py
+# @File        : infer_end_to_end1.py
 # @Description : aws video processing任务的脚本，输入为视频，输入为不带音频的视频
 
 import os
@@ -127,23 +127,19 @@ def sorted_boxes(dt_boxes):
 
 
 def main(args):
-    # image_file_list = get_image_file_list(args.image_dir)
-    # image_file_list = image_file_list[args.process_id::args.total_process_num]
     text_sys = TextSystem(args)
-    is_visualize = True
     font_path = args.vis_font_path
     keyword = args.keyword
     drop_score = args.drop_score
-    video = args.video
-    video_save_dir = args.video_save_path
-    video_name = os.path.basename(video).split(".")[0] + ".mp4"
-    os.makedirs(video_save_dir, exist_ok=True)
     save_results = []
 
     logger.info(
         "In PP-OCRv3, rec_image_shape parameter defaults to '3, 48, 320', "
         "if you are using recognition model with PP-OCRv2 or an older version, please set --rec_image_shape='3,32,320"
     )
+
+    if args.image_dir and args.video:
+        raise Exception("Error: Only one argument in 'image_dir'and 'video' is allowed to be specified!")
 
     # warm up 10 times
     if args.warmup:
@@ -155,81 +151,138 @@ def main(args):
     cpu_mem, gpu_mem, gpu_util = 0, 0, 0
     _st = time.time()
 
-    # the following is to realize the function of video processing
-    # 读取视频
-    capture = cv2.VideoCapture(args.video)
-    # 视频  fps  width  height
-    v_fps = capture.get(5)  # 约等于30
-    v_width = capture.get(3)  # 1920.0
-    v_height = capture.get(4)  # 1080.0
-    frame_size = (int(v_width), int(v_height))
+    if args.video:
+        video = args.video
+        video_save_dir = args.video_save_path
+        video_name = os.path.basename(video).split(".")[0] + ".mp4"
+        os.makedirs(video_save_dir, exist_ok=True)
+        # 读取视频
+        capture = cv2.VideoCapture(args.video)
+        # 视频  fps  width  height
+        v_fps = capture.get(5)  # 约等于30
+        v_width = capture.get(3)  # 1920.0
+        v_height = capture.get(4)  # 1080.0
+        frame_size = (int(v_width), int(v_height))
 
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # opencv版本是3
-    out_path = os.path.join(video_save_dir, video_name)
-    videoWriter = cv2.VideoWriter(out_path, fourcc, v_fps, frame_size)
+        fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # opencv版本是3
+        out_path = os.path.join(video_save_dir, video_name)
+        videoWriter = cv2.VideoWriter(out_path, fourcc, v_fps, frame_size)
 
-    count = 0
-    while True:
-        count += 1
-        res, image = capture.read()
-        if not res:
-            logger.info('not res , not image')
-            break
-        logger.info("-----------"*5)
-        logger.info("Processing frame: {}".format(count))
+        count = 0
+        while True:
+            count += 1
+            res, image = capture.read()
+            if not res:
+                logger.info('not res , not image')
+                break
+            logger.info("-----------"*5)
+            logger.info("Processing frame: {}".format(count))
 
-        starttime = time.time()
-        dt_boxes, rec_res, time_dict = text_sys(image)
-        elapse = time.time() - starttime
-        total_time += elapse
+            starttime = time.time()
+            dt_boxes, rec_res, time_dict = text_sys(image)
+            elapse = time.time() - starttime
+            total_time += elapse
 
-        logger.debug(
-            str(count) + "  Predict time : %.3fs" %  elapse)
-        for text, score in rec_res:
-            logger.debug("{}, {:.3f}".format(text, score))
+            logger.debug(
+                str(count) + "  Predict time : %.3fs" %  elapse)
+            for text, score in rec_res:
+                logger.debug("{}, {:.3f}".format(text, score))
 
-        # 生成识别结果list，示例：
-        # res = [{"transcription": "Modernize your data", "points": [[101, 733], [1597, 740], [1597, 855], [101, 848]]}...]
-        res = [{
-            "transcription": rec_res[idx][0],
-            "points": np.array(dt_boxes[idx]).astype(np.int32).tolist(),
-        } for idx in range(len(dt_boxes))]
-        save_pred = os.path.basename("frame_{}.png".format(count)) + "\t" + json.dumps(
-            res, ensure_ascii=False) + "\n"
-        save_results.append(save_pred)
+            # 生成识别结果list，示例：
+            # res = [{"transcription": "Modernize your data", "points": [[101, 733], [1597, 740], [1597, 855], [101, 848]]}...]
+            res = [{
+                "transcription": rec_res[idx][0],
+                "points": np.array(dt_boxes[idx]).astype(np.int32).tolist(),
+            } for idx in range(len(dt_boxes))]
+            save_pred = os.path.basename("frame_{}.png".format(count)) + "\t" + json.dumps(
+                res, ensure_ascii=False) + "\n"
+            save_results.append(save_pred)
 
-        # 检测框boxes
-        # boxes = dt_boxes
-        boxes = [np.array(dt_boxes[idx]).astype(np.int32).tolist() for idx in range(len(dt_boxes))]
-        # 识别的文字txts
-        txts = [rec_res[i][0] for i in range(len(rec_res))]
-        # txts对应的置信度scores
-        scores = [rec_res[i][1] for i in range(len(rec_res))]
-        # 对检测到的"aws"打上马赛克
-        draw_img = draw_mosaic(
-            image,
-            boxes,
-            txts,
-            scores,
-            keyword,
-            drop_score=drop_score
-        )
+            # 检测框boxes
+            # boxes = dt_boxes
+            boxes = [np.array(dt_boxes[idx]).astype(np.int32).tolist() for idx in range(len(dt_boxes))]
+            # 识别的文字txts
+            txts = [rec_res[i][0] for i in range(len(rec_res))]
+            # txts对应的置信度scores
+            scores = [rec_res[i][1] for i in range(len(rec_res))]
+            # 对检测到的"aws"打上马赛克
+            draw_img = draw_mosaic(
+                image,
+                boxes,
+                txts,
+                scores,
+                keyword,
+                drop_score=drop_score
+            )
 
-        videoWriter.write(draw_img)
+            videoWriter.write(draw_img)
 
-    videoWriter.release()
-    logger.info("The processed video has been saved in: {}".format(out_path))
-    logger.info("The predict total time is {}".format(time.time() - _st))
+        videoWriter.release()
+        logger.info("The processed video has been saved in: {}".format(out_path))
+        logger.info("The predict total time is {}".format(time.time() - _st))
 
-    if args.benchmark:
-        text_sys.text_detector.autolog.report()
-        text_sys.text_recognizer.autolog.report()
+        with open(
+                os.path.join(video_save_dir, "system_results.txt"),
+                'w',
+                encoding='utf-8') as f:
+            f.writelines(save_results)
+    elif args.image_dir:
+        image_file_list = get_image_file_list(args.image_dir)
+        image_file_list = image_file_list[args.process_id::args.total_process_num]
+        draw_img_save_dir = args.draw_img_save_dir
+        os.makedirs(draw_img_save_dir, exist_ok=True)
 
-    with open(
-            os.path.join(video_save_dir, "system_results.txt"),
-            'w',
-            encoding='utf-8') as f:
-        f.writelines(save_results)
+        # 遍历整个图像文件夹开始执行文字检测和识别
+        for idx, image_file in enumerate(image_file_list):
+            img, flag, _ = check_and_read(image_file)
+            if not flag:
+                img = cv2.imread(image_file)
+            if img is None:
+                logger.debug("error in loading image:{}".format(image_file))
+                continue
+
+            starttime = time.time()
+            dt_boxes, rec_res, time_dict = text_sys(img)
+            elapse = time.time() - starttime
+            total_time += elapse
+
+            logger.debug(
+                str(idx) + "  Predict time of %s: %.3fs" % (image_file, elapse))
+            for text, score in rec_res:
+                logger.debug("{}, {:.3f}".format(text, score))
+            # 生成识别结果list，示例：
+            # res = [{"transcription": "Modernize your data", "points": [[101, 733], [1597, 740], [1597, 855], [101, 848]]}...]
+            res = [{
+                "transcription": rec_res[idx][0],
+                "points": np.array(dt_boxes[idx]).astype(np.int32).tolist(),
+            } for idx in range(len(dt_boxes))]
+            save_pred = os.path.basename(image_file) + "\t" + json.dumps(
+                res, ensure_ascii=False) + "\n"
+            save_results.append(save_pred)
+            image = img
+            # 检测框boxes
+            # boxes = dt_boxes
+            boxes = [np.array(dt_boxes[idx]).astype(np.int32).tolist() for idx in range(len(dt_boxes))]
+            # 识别的文字txts
+            txts = [rec_res[i][0] for i in range(len(rec_res))]
+            # txts对应的置信度scores
+            scores = [rec_res[i][1] for i in range(len(rec_res))]
+            # 对检测到的"aws"打上马赛克
+            draw_img = draw_mosaic(
+                image,
+                boxes,
+                txts,
+                scores,
+                keyword,
+                drop_score=drop_score
+            )
+            if flag:
+                image_file = image_file[:-3] + "png"
+            cv2.imwrite(
+                os.path.join(draw_img_save_dir, os.path.basename(image_file)),
+                draw_img)
+            logger.debug("The visualized image saved in {}".format(
+                os.path.join(draw_img_save_dir, os.path.basename(image_file))))
 
 
 if __name__ == "__main__":

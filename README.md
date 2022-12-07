@@ -54,7 +54,7 @@ tar xf en_PP-OCRv3_rec_infer.tar
 输入为待预测的图像文件夹，输出为多张预测后的图像
 
 ```commandline
-python3 tools/infer_aws/predict_system.py \
+python3 tools/infer_aws/infer_end_to_end.py \
 --keyword="aws" \
 --image_dir=/home/jackdance/Desktop/aws_video/some_frame \
 --det_model_dir="./pretrained_model/en_PP-OCRv3_det_infer/" \
