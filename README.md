@@ -1,57 +1,58 @@
-## 背景介绍
-本项目以AWS关键字为例，介绍了如何对aws会议视频中出现的"aws"logo以及视频中出现的"aws"单词进行遮盖，
-具体可以使用mask遮盖或者模糊化处理。
+## Background Introduction
+Taking AWS keywords as an example, this project introduces how to cover up the "aws" logo and the word "aws" that appear in the video of the aws meeting.
+Specifically, mask covering or blurring can be used.
 
-## 技术路线
-该项目使用mask遮盖的方式进行处理。具体是使用PaddleOCR库对视频每一帧的图像进行
-文字识别，如果"识别的字符串".lower() == "aws", 则对该字符串对应的区域进行黑化处理(b, g, r)=(0, 0, 0)。
+## Technical route
+This item is processed by mask. Specifically, use the PaddleOCR library to perform text recognition on the image of each frame of the video. If "recognized string".lower() == "aws", then blacken the area corresponding to the string (b, g, r)=(0, 0, 0).
 
-具体路线图如下：
+The specific roadmap is as follows：
 <center>
     <img src="https://i.postimg.cc/DwDZ3R6t/aws.png" title="Route Map" width="300">
 </center>
 
 
-## 运行步骤
-### 1. 环境配置
-1.1 新建并激活conda环境
+## Run Steps
+### 1. Environment configuration
+1.1 Create and activate conda environment
 ```commandline
 conda create -n video_process python=3.8 -y
 conda activate video_process
 ```
-1.2 安装依赖
+1.2 Install dependencies
 
-安装paddle框架，这里安装的是cpu版本的paddle，大家根据自己机器的环境选择安装合适版本，参考链接：[paddlepaddle安装](https://www.paddlepaddle.org.cn/)
+Install the paddle framework. 
+
+The cpu version of paddle is installed here. You can choose to install the appropriate version according to your machine environment. Refer to the link：[PaddlePaddle Installation](https://www.paddlepaddle.org.cn/)
 ```commandline
 python -m pip install paddlepaddle==2.4.0 -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
-安装项目依赖
+Install other packages
 ```commandline
-git clone 该仓库地址
-cd 该仓库主目录
+git clone "this repo address"
+cd "this repo main directory"
 pip install -r requirements.txt
 ```
 
-### 2. 下载预训练的模型
-进入主目录，新建并进入pretrained_model文件夹，下面下载两个关于该任务的模型
+### 2. Download pretrained models
+Enter the main directory, create a new one and enter the `pretrained_mode` folder, download two models about this task below
 
-2.1 下载英文文字检测模型
+2.1 Download the English text detection model
 ```commandline
 wget https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_det_infer.tar
 tar xf en_PP-OCRv3_det_infer.tar
 ```
-2.2 下载英文文字识别模型
+2.2 Download the English text recognition model
 ```commandline
 wget https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_rec_infer.tar
 tar xf en_PP-OCRv3_rec_infer.tar
 ```
 
 
-### 3. 运行命令
+### 3. Perform Inference
 
-3.1执行图像文件夹的end to end推理
+3.1 Perform end-to-end inference of image folders
 
-输入为待预测的图像文件夹，输出为多张预测后的图像。可视化识别结果默认保存到 ./inference_results 文件夹里面。
+The input is the image folder to be predicted, and the output is multiple predicted images. Visual recognition results are saved to the ./inference_results folder by default.
 
 ```commandline
 python3 tools/infer_keyword/infer_end_to_end.py \
@@ -64,21 +65,21 @@ python3 tools/infer_keyword/infer_end_to_end.py \
 --total_process_num=8
 ```
 
-参数解释：
-- keyword 需要替换或遮挡的关键字 (这里只能指定英文关键字，若指定中文，需下载中文文字检测和识别模型以及修改文字识别字符集路径)
-- image_dir 输入的图像文件夹
-- video 输入的视频
-- det_model_dir 文字检测模型的路径
-- rec_model_dir 文字识别模型的路径
-- rec_char_dict_path 文字识别字符集的路径
-- use_mp 是否开启多进程
-- total_process_num 使用多进程时的进程数
+Parameter comment：
+- keyword: Keywords that need to be replaced or blocked (only English keywords can be specified here, if Chinese is specified, it is necessary to download the Chinese text detection and recognition model and modify the character set path for text recognition)
+- image_dir: input image folder
+- video: input video
+- det_model_dir: the path to text detection model
+- rec_model_dir: the path to text recognition model
+- rec_char_dict_path: the path to the text recognition character set
+- use_mp: whether to enable multiprocessing
+- total_process_num: numbers of processes when using multiprocessing
 
-3.2 执行视频的end to end推理
+3.2 Perform end-to-end inference of video
 
-输入为单个视频，输出为处理过的单个视频（该视频没有音频）
+The input is a single video and the output is a processed single video (the video has no audio)
 
-PS: [输入视频样例](https://pan.baidu.com/s/16AxRp0IVYF7AJ67L2GoZBA) 提取码: f93p
+PS: [input video sample](https://pan.baidu.com/s/16AxRp0IVYF7AJ67L2GoZBA) Extraction code: f93p
 
 ```commandline
 python3 tools/infer_keyword/infer_end_to_end.py \
@@ -92,18 +93,18 @@ python3 tools/infer_keyword/infer_end_to_end.py \
 ```
 
 
-## 结果示例
-第一张图为原始视频中的带有aws字符的某帧图片，第二张图为对应的处理过的图片
+## Example result
+The first picture is a frame picture with aws characters in the original video, and the second picture is the corresponding processed picture
 <center class="half">
     <img src="https://i.postimg.cc/xds6LqB5/origin-aws.png" title="origin" width="300"/>
     <img src="https://i.postimg.cc/pXq5W8js/processed-aws.png" title="processed" width="300"/>
 </center>
 
 
-## 后续计划
-- 增加文字替换功能
-- 增加logo遮盖功能
-- Docker镜像
+## Follow-up plan
+- Add text replacement function
+- Add logo cover function
+- Docker image
 
 
-如果该仓库有帮助到你，欢迎给个star。有任何疑问都可以提issue～
+If this repository is helpful to you, please give it a `star`. If you have any questions, you can raise `issue`~
