@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Time        : 2022/12/7 21:48
 # @Author      : Luyao.zhang
-# @File        : infer_end_to_end1.py
-# @Description : aws video processing任务的脚本，输入为视频，输入为不带音频的视频
+# @File        : infer_end_to_end.py
+# @Description : aws video processing任务的脚本，输入为视频，输出为不带音频的视频
 
 import os
 import sys
