@@ -51,7 +51,7 @@ tar xf en_PP-OCRv3_rec_infer.tar
 
 3.1执行图像文件夹的end to end推理
 
-输入为待预测的图像文件夹，输出为多张预测后的图像
+输入为待预测的图像文件夹，输出为多张预测后的图像。可视化识别结果默认保存到 ./inference_results 文件夹里面。
 
 ```commandline
 python3 tools/infer_keyword/infer_end_to_end.py \
@@ -59,8 +59,20 @@ python3 tools/infer_keyword/infer_end_to_end.py \
 --image_dir=/home/jackdance/Desktop/aws_video/some_frame \
 --det_model_dir="./pretrained_model/en_PP-OCRv3_det_infer/" \
 --rec_model_dir="./pretrained_model/en_PP-OCRv3_rec_infer/" \
---rec_char_dict_path="ppocr/utils/en_dict.txt"
+--rec_char_dict_path="ppocr/utils/en_dict.txt" \
+--use_mp=True \
+--total_process_num=8
 ```
+
+参数解释：
+- keyword 需要替换或遮挡的关键字 (这里只能指定英文关键字，若指定中文，需下载中文文字检测和识别模型以及修改文字识别字符集路径)
+- image_dir 输入的图像文件夹
+- video 输入的视频
+- det_model_dir 文字检测模型的路径
+- rec_model_dir 文字识别模型的路径
+- rec_char_dict_path 文字识别字符集的路径
+- use_mp 是否开启多进程
+- total_process_num 使用多进程时的进程数
 
 3.2 执行视频的end to end推理
 
@@ -74,15 +86,11 @@ python3 tools/infer_keyword/infer_end_to_end.py \
 --video=/home/jackdance/Desktop/aws_video/aws_first_2mins.mp4 \
 --det_model_dir="./pretrained_model/en_PP-OCRv3_det_infer/" \
 --rec_model_dir="./pretrained_model/en_PP-OCRv3_rec_infer/" \
---rec_char_dict_path="ppocr/utils/en_dict.txt"
+--rec_char_dict_path="ppocr/utils/en_dict.txt" \
+--use_mp=True \
+--total_process_num=8
 ```
-参数解释：
-- keyword 需要替换或遮挡的关键字 (这里只能指定英文关键字，若指定中文，需下载中文文字检测和识别模型以及修改文字识别字符集路径)
-- image_dir 输入的图像文件夹
-- video 输入的视频
-- det_model_dir 文字检测模型的路径
-- rec_model_dir 文字识别模型的路径
-- rec_char_dict_path 文字识别字符集的路径
+
 
 ## 结果示例
 第一张图为原始视频中的带有aws字符的某帧图片，第二张图为对应的处理过的图片
