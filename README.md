@@ -107,4 +107,4 @@ The first picture is a frame picture with aws characters in the original video, 
 - Docker image
 
 
-If this repository is helpful to you, please give it a `star`. If you have any questions, you can raise `issue`~
+If this repository is helpful to you, please give it a `star`. If any questions, you can raise `issue`~
