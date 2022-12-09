@@ -20,13 +20,16 @@ conda activate video_process
 ```
 1.2 Install dependencies
 
-Install the paddle framework. 
+Install Paddle framework. 
 
 The cpu version of paddle is installed here. You can choose to install the appropriate version according to your machine environment. Refer to the link：[PaddlePaddle Installation](https://www.paddlepaddle.org.cn/)
 ```commandline
 python -m pip install paddlepaddle==2.4.0 -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
-Install other packages
+Clone the repo and install revolved packages.
+
+There are two channels for [Github](https://github.com/JackDance/text_occlusion_in_video) and [Gitee](https://gitee.com/Jack_forever/aws-video-process) to provide downloads, domestic friends can copy this repo through Gitee.
+
 ```commandline
 git clone "this repo address"
 cd "this repo main directory"
@@ -34,19 +37,17 @@ pip install -r requirements.txt
 ```
 
 ### 2. Download pretrained models
-Enter the main directory, create a new one and enter the `pretrained_mode` folder, download two models about this task below
+Enter the main directory, create a new one and enter the `pretrained_model` folder, download two models about this task below
 
-2.1 Download the English text detection model
+2.1 Download English text detection and character recognition model
 ```commandline
 wget https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_det_infer.tar
 tar xf en_PP-OCRv3_det_infer.tar
-```
-2.2 Download the English text recognition model
-```commandline
+
 wget https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_rec_infer.tar
 tar xf en_PP-OCRv3_rec_infer.tar
 ```
-
+If you would like to download other language detection and recognition models, please refer to [PP-OCR series model list](https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/models_list_en.md)
 
 ### 3. Perform Inference
 
@@ -71,7 +72,7 @@ Parameter comment：
 - video: input video
 - det_model_dir: the path to text detection model
 - rec_model_dir: the path to text recognition model
-- rec_char_dict_path: the path to the text recognition character set
+- rec_char_dict_path: the path to the text recognition character set, `ppocr/utils/en_dict.txt` is just for English, other language character set can be found in `ppocr/utils`.
 - use_mp: whether to enable multiprocessing
 - total_process_num: numbers of processes when using multiprocessing
 
@@ -93,11 +94,11 @@ python3 tools/infer_keyword/infer_end_to_end.py \
 ```
 
 
-## Example result
+## Results show
 The first picture is a frame picture with aws characters in the original video, and the second picture is the corresponding processed picture
 <center class="half">
-    <img src="https://i.postimg.cc/xds6LqB5/origin-aws.png" title="origin" width="300"/>
-    <img src="https://i.postimg.cc/pXq5W8js/processed-aws.png" title="processed" width="300"/>
+    <img src="https://i.postimg.cc/xds6LqB5/origin-aws.png" title="origin" width="450"/>
+    <img src="https://i.postimg.cc/pXq5W8js/processed-aws.png" title="processed" width="450"/>
 </center>
 
 
@@ -106,5 +107,13 @@ The first picture is a frame picture with aws characters in the original video, 
 - Add logo cover function
 - Docker image
 
+## Update record
+- December 8, 2022
+
+    Merge image folder inference and video inference into one script.
+
+- December 9, 2022
+
+    Add chinese simplified character recognition.
 
 If this repository is helpful to you, please give it a `star`. If any questions, you can raise `issue`~
