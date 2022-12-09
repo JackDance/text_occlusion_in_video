@@ -67,14 +67,14 @@ python3 tools/infer_keyword/infer_end_to_end.py \
 ```
 
 Parameter comment：
-- keyword: Keywords that need to be replaced or blocked (only English keywords can be specified here, if Chinese is specified, it is necessary to download the Chinese text detection and recognition model and modify the character set path for text recognition)
-- image_dir: input image folder
-- video: input video
-- det_model_dir: the path to text detection model
-- rec_model_dir: the path to text recognition model
-- rec_char_dict_path: the path to the text recognition character set, `ppocr/utils/en_dict.txt` is just for English, other language character set can be found in `ppocr/utils`.
-- use_mp: whether to enable multiprocessing
-- total_process_num: numbers of processes when using multiprocessing
+- `keyword`: Keywords that need to be replaced or blocked (only English keywords can be specified here, if Chinese is specified, it is necessary to download the Chinese text detection and recognition model and modify the character set path for text recognition)
+- `image_dir`: input image folder
+- `video`: input video
+- `det_model_dir`: the path to text detection model
+- `rec_model_dir`: the path to text recognition model
+- `rec_char_dict_path`: the path to the text recognition character set, `ppocr/utils/en_dict.txt` is just for English, other language character set can be found in `ppocr/utils`.
+- `use_mp`: whether to enable multiprocessing
+- `total_process_num`: numbers of processes when using multiprocessing
 
 3.2 Perform end-to-end inference of video
 
