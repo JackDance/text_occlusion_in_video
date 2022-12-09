@@ -112,8 +112,8 @@ The first picture is a frame picture with aws characters in the original video, 
 
     Merge image folder inference and video inference into one script.
 
-- December 9, 2022
+  - December 9, 2022
 
-    Add chinese simplified character recognition.
+      Add additional language detection and recognition models.
 
-If this repository is helpful to you, please give it a `star`. If any questions, you can raise `issue`~
+If you also like this project, you may wish to give a `star` (^.^)✨ . If any questions, you can raise `issue`~
