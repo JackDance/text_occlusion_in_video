@@ -112,8 +112,8 @@ The first picture is a frame picture with aws characters in the original video, 
 
     Merge image folder inference and video inference into one script.
 
-  - December 9, 2022
+- December 9, 2022
 
-      Add additional language detection and recognition models.
+    Add additional language detection and recognition models.
 
 If you also like this project, you may wish to give a `star` (^.^)✨ . If any questions, you can raise `issue`~
