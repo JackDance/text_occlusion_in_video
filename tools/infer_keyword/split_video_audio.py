@@ -13,7 +13,7 @@ from moviepy.editor import AudioFileClip, VideoFileClip, concatenate_videoclips
 
 def extract_offline_audio_from_video(video_file, audio_save_path):
     """
-    将音频从原始的视频中提取出来，参考链接：https://blog.csdn.net/qq_34769162/article/details/107910036
+    将音频从原始的视频中提取出来并保存，参考链接：https://blog.csdn.net/qq_34769162/article/details/107910036
     注意：提取后，原视频维持不变，即视频中的音频还在
     :param video_file: 待提取的原视频路径
     :param audio_save_path: 音频保存路径

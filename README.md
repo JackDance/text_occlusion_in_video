@@ -103,8 +103,7 @@ The first picture is a frame picture with aws characters in the original video, 
 
 
 ## Follow-up plan
-- Add text replacement function
-- Add logo cover function
+- Merge audio into video
 - Docker image
 
 ## Update record

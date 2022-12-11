@@ -21,7 +21,6 @@ import numpy as np
 import json
 import time
 import logging
-from PIL import Image
 import tools.infer.utility as utility
 import tools.infer.predict_rec as predict_rec
 import tools.infer.predict_det as predict_det
