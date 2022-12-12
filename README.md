@@ -7,7 +7,7 @@ This item is processed by mask. Specifically, use the PaddleOCR library to perfo
 
 The specific roadmap is as follows：
 <center>
-    <img src="https://i.postimg.cc/DwDZ3R6t/aws.png" title="Route Map" width="300">
+    <img src="https://i.postimg.cc/G2kjj6z8/tt.png" title="Route Map" width="300">
 </center>
 
 
