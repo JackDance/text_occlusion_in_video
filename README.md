@@ -93,6 +93,40 @@ python3 tools/infer_keyword/infer_end_to_end.py \
 --total_process_num=8
 ```
 
+## Docker deployment
+Use `Dockerfile`to build or directly `pull` the Image.
+
+Method 1: use `Dockerfile` to build
+```commandline
+# build dockerfile
+docker build -t video_process:v0.1 .
+
+# run Image
+docker run -it \
+--gpus "device=0" \
+-v the path to host:the path to docker container \
+-p 5002:5002 \
+--privileged=True \
+--name video_process \
+video_process:v0.1 \
+/bin/bash
+```
+
+Method 2: Directly `pull` the Image
+```commandline
+# pull from dockerhub
+docker pull jackdance/video_process:v0.1
+
+# run Image
+docker run -it \
+--gpus "device=0" \
+-v the path to host:the path to docker container \
+-p 5002:5002 \
+--privileged=True \
+--name video_process \
+video_process:v0.1 \
+/bin/bash
+```
 
 ## Results show
 The first picture is a frame picture with aws characters in the original video, and the second picture is the corresponding processed picture
@@ -104,7 +138,6 @@ The first picture is a frame picture with aws characters in the original video, 
 
 ## Follow-up plan
 - Merge audio into video
-- Docker image
 
 ## Update record
 - December 8, 2022
@@ -114,5 +147,9 @@ The first picture is a frame picture with aws characters in the original video, 
 - December 9, 2022
 
     Add additional language detection and recognition models.
+
+- December 12, 2022
+
+    💃 Add Docker deployment.
 
 If you also like this project, you may wish to give a `star` (^.^)✨ . If any questions, you can raise `issue`~

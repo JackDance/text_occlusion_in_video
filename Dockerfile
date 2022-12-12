@@ -10,4 +10,3 @@ WORKDIR /workdir
 
 EXPOSE 5002
 
-# CMD ["python", "app.py"]
