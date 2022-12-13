@@ -25,6 +25,7 @@ import tools.infer.utility as utility
 import tools.infer.predict_rec as predict_rec
 import tools.infer.predict_det as predict_det
 import tools.infer.predict_cls as predict_cls
+import tools.infer_keyword.video_processing as video_processing
 from ppocr.utils.utility import get_image_file_list, check_and_read
 from ppocr.utils.logging import get_logger
 from tools.infer.utility import draw_ocr_box_txt, get_rotate_crop_image, draw_mosaic
@@ -153,6 +154,7 @@ def main(args):
     if args.video:
         video = args.video
         video_save_dir = args.video_save_path
+        video_name_without_audio = os.path.basename(video).split(".")[0] + "_without_audio.mp4"
         video_name = os.path.basename(video).split(".")[0] + ".mp4"
         os.makedirs(video_save_dir, exist_ok=True)
         # 读取视频
@@ -164,8 +166,10 @@ def main(args):
         frame_size = (int(v_width), int(v_height))
 
         fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # opencv版本是3
-        out_path = os.path.join(video_save_dir, video_name)
-        videoWriter = cv2.VideoWriter(out_path, fourcc, v_fps, frame_size)
+        video_without_audio_save_path = os.path.join(video_save_dir, video_name_without_audio) # 处理过的视频保存路径，该视频不带audio
+        videoWriter = cv2.VideoWriter(video_without_audio_save_path, fourcc, v_fps, frame_size)
+
+        final_video_save_path = os.path.join(video_save_dir, video_name)
 
         count = 0
         while True:
@@ -217,8 +221,12 @@ def main(args):
             videoWriter.write(draw_img)
 
         videoWriter.release()
-        logger.info("The processed video has been saved in: {}".format(out_path))
-        logger.info("The predict total time is {}".format(time.time() - _st))
+
+        # merge audio to generated video
+        video_processing.merge_online_video_to_audio(video, video_without_audio_save_path, final_video_save_path)
+
+        logger.info("The processed video has been saved in: {}".format(video_without_audio_save_path))
+        logger.info("The total time is {}".format(time.time() - _st))
 
         with open(
                 os.path.join(video_save_dir, "system_results.txt"),

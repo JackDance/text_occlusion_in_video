@@ -43,25 +43,24 @@ def extract_silent_video(video_file, save_dir):
     video.write_videofile(save_video_path)
 
 
-def merge_online_video_to_audio(src_video_file, generated_video_file, save_dir):
+def merge_online_video_to_audio(src_video_file, generated_video_file, save_path):
     """
     将在线音频合并到没有音频的视频中。
     具体做法：提取原视频src_video_file中的音频audio，然后将audio合并到第二个视频generated_video_file中，最后将合并后的带有音频的视频保存
     :param video_file:
-    :param save_dir:
+    :param save_path:
     :return:
     """
-    os.makedirs(save_dir, exist_ok=True)
-    save_video_name = "output.mp4"
+    os.makedirs(save_dir, exist_ok=True) # 参数exist_ok默认是False，即如果要创建的目录存在就报错，若设为True，则创建目录的时候如果已经存在则不报错
     # 读取src_video_file文件和generated_video_file文件
     src_video_clip = VideoFileClip(src_video_file)
     gen_video_clip = VideoFileClip(generated_video_file)
     # 获得src_video_file文件的音频
     audio = src_video_clip.audio
-    # 将音频与读取的视频文件进行合成
+    # 将音频与生成的视频文件进行合成
     video_clip_audio = gen_video_clip.set_audio(audio)
     # 输出新的视频文件
-    video_clip_audio.write_videofile(os.path.join(save_dir, save_video_name))
+    video_clip_audio.write_videofile(save_path, audio_codec="aac")
 
 def merge_offline_audio_to_video(video_file, audio_file, save_dir):
     """
@@ -294,10 +293,10 @@ if __name__ == '__main__':
     # merge_video(video_dir, merged_video_save_dir)
 
     #------执行merge_online_video_to_audio函数--------
-    # src_video_file = r"/Users/jack/Downloads/AWS_video/origin_video/aws.mp4"
-    # generated_video_file = r"/Users/jack/Downloads/AWS_video/generated_video/merged_video/merged_video.mp4"
-    # save_dir = r"/Users/jack/Downloads/AWS_video/final_result"
-    # merge_online_video_to_audio(src_video_file, generated_video_file, save_dir)
+    src_video_file = r"/Users/jack/Desktop/video/original_video.mp4"
+    generated_video_file = r"/Users/jack/Desktop/video/video_without_audio.mp4"
+    save_dir = r"/Users/jack/Desktop/video"
+    merge_online_video_to_audio(src_video_file, generated_video_file, save_dir)
 
     # -----执行extract_silent_video函数-------
     # video_file = r"/Users/jack/Downloads/AWS_video/origin_video/aws.mp4"
@@ -305,10 +304,10 @@ if __name__ == '__main__':
     # extract_silent_video(video_file, save_dir)
 
     # -----执行merge_offline_audio_to_video函数-----------
-    video_file = r"/Users/jack/Downloads/AWS_video/generated_video/aws.mp4"
-    audio_file = r"/Users/jack/Downloads/AWS_video/audio/mp4.mp3"
-    save_dir = "/Users/jack/Downloads/AWS_video/generated_video/final"
-    merge_offline_audio_to_video(video_file, audio_file, save_dir)
+    # video_file = r"/Users/jack/Downloads/AWS_video/generated_video/aws.mp4"
+    # audio_file = r"/Users/jack/Downloads/AWS_video/audio/mp4.mp3"
+    # save_dir = "/Users/jack/Downloads/AWS_video/generated_video/final"
+    # merge_offline_audio_to_video(video_file, audio_file, save_dir)
 
 
 

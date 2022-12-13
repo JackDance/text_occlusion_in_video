@@ -136,9 +136,6 @@ The first picture is a frame picture with aws characters in the original video, 
 </center>
 
 
-## Follow-up plan
-- Merge audio into video
-
 ## Update record
 - December 8, 2022
 
@@ -151,5 +148,9 @@ The first picture is a frame picture with aws characters in the original video, 
 - December 12, 2022
 
     💃 Add Docker deployment.
+
+  - December 13, 2022
+
+    🕺 Merge audio to vidio.
 
 If you also like this project, you may wish to give a `star` (^.^)✨ . If any questions, you can raise `issue`~
