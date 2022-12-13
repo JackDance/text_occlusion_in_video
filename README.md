@@ -149,7 +149,7 @@ The first picture is a frame picture with aws characters in the original video, 
 
     💃 Add Docker deployment.
 
-  - December 13, 2022
+- December 13, 2022
 
     🕺 Merge audio to vidio.
 
