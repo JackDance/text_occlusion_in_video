@@ -99,7 +99,7 @@ Use `Dockerfile`to build or directly `pull` the Image.
 Method 1: use `Dockerfile` to build
 ```commandline
 # build dockerfile
-docker build -t video_process:v0.1 .
+docker build -t video_process:v0.2 .
 
 # run Image
 docker run -it \
@@ -108,14 +108,14 @@ docker run -it \
 -p 5002:5002 \
 --privileged=True \
 --name video_process \
-video_process:v0.1 \
+video_process:v0.2 \
 /bin/bash
 ```
 
 Method 2: Directly `pull` the Image
 ```commandline
 # pull from dockerhub
-docker pull jackdance/video_process:v0.1
+docker pull jackdance/video_process:v0.2
 
 # run Image
 docker run -it \
@@ -124,7 +124,7 @@ docker run -it \
 -p 5002:5002 \
 --privileged=True \
 --name video_process \
-video_process:v0.1 \
+video_process:v0.2 \
 /bin/bash
 ```
 
