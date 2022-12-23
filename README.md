@@ -128,7 +128,7 @@ video_process:v0.2 \
 /bin/bash
 ```
 
-## Results show
+## Sample result
 The first picture is a frame picture with aws characters in the original video, and the second picture is the corresponding processed picture
 <center class="half">
     <img src="https://i.postimg.cc/xds6LqB5/origin-aws.png" title="origin" width="450"/>
@@ -151,6 +151,6 @@ The first picture is a frame picture with aws characters in the original video, 
 
 - December 13, 2022
 
-    🕺 Merge audio to vidio.
+    🕺 Merge audio to video.
 
 If you also like this project, you may wish to give a `star` (^.^)✨ . If any questions, you can raise `issue`~
