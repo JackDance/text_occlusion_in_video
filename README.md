@@ -78,7 +78,7 @@ Parameter comment：
 
 3.2 Perform end-to-end inference of video
 
-The input is a single video and the output is a processed single video (the video has no audio)
+The input is a single video and the output is a processed single video
 
 PS: [input video sample](https://pan.baidu.com/s/16AxRp0IVYF7AJ67L2GoZBA) Extraction code: f93p
 
